@@ -159,8 +159,8 @@
     <ClInclude Include="header\Tech.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Release\shader\shader.frag" />
-    <None Include="Release\shader\shader.vert" />
+    <None Include="res\shader\shader.frag" />
+    <None Include="res\shader\shader.vert" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="source\glew32s.lib" />
