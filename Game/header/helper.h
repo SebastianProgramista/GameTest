@@ -20,7 +20,7 @@ using namespace std;
 
 #define GLEW_STATIC
 #include <GL/glew.h>
-#include <glfw3.h>
+#include <../GLFW3.3.2/glfw3.h>
 #include <GL/wglew.h>
 
 #include <glm/glm.hpp>
