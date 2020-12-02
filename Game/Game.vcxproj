@@ -103,14 +103,14 @@
       </SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Admin\source\repos\GameTest\Game\extended\glm-0.9.1.1;C:\Users\Admin\source\repos\GameTest\Game\extended\glew-1.6.0\include;C:\Users\Admin\source\repos\GameTest\Game\extended\GLFW3.3.2;C:\Users\Admin\source\repos\GameTest\Game\extended\SOIL;C:\Users\Admin\source\repos\GameTest\Game\header;C:\Users\Admin\source\repos\GameTest\Game\source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Game\extended\glm-0.9.1.1;Game\extended\glew-1.6.0\include;Game\extended\GLFW3.3.2;..\Game\header;..\Game\source;Game\extended\SOIL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Programowanie\git\program2\extended\glew-1.6.0\lib;C:\Programowanie\git\program2\extended\GLFW3.3.2;C:\Programowanie\git\program2\extended\SOIL</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>extended\glew-1.6.0\lib;extended\GLFW3.3.2;extended\SOIL</AdditionalLibraryDirectories>
       <AdditionalDependencies>OpenGL32.lib;opengl32.lib;glfw3_32.lib;SOIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>LIBCMT</IgnoreSpecificDefaultLibraries>
     </Link>

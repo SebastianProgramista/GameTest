@@ -19,19 +19,22 @@ using namespace std;
 #include <stdlib.h>
 
 #define GLEW_STATIC
-#include <GL/glew.h>
-#include <../GLFW3.3.2/glfw3.h>
-#include <GL/wglew.h>
+#include <..\extended\glew-1.6.0\include\GL\glew.h>
+#include <..\extended\GLFW3.3.2\glfw3.h>
+#include <..\extended\glew-1.6.0\include\GL/wglew.h>
 
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtx/quaternion.hpp>
-#include <glm/gtc/half_float.hpp>
-#include <glm/gtc/type_ptr.hpp>
-#include <glm/gtx/compatibility.hpp>
-#include <glm/gtx/transform.hpp>
 
-#include <SOIL.h>
+#include <..\extended\glm-0.9.1.1\glm\glm.hpp>
+
+
+#include <..\extended\glm-0.9.1.1\glm/gtc/matrix_transform.hpp>
+#include <..\extended\glm-0.9.1.1\glm\gtx/quaternion.hpp>
+#include <..\extended\glm-0.9.1.1\glm\gtc/half_float.hpp>
+#include <..\extended\glm-0.9.1.1\glm\gtc/type_ptr.hpp>
+#include <..\extended\glm-0.9.1.1\glm\gtx/compatibility.hpp>
+#include <..\extended\glm-0.9.1.1\glm\gtx/transform.hpp>
+
+#include <..\extended\SOIL\SOIL.h>
 
 
 #ifndef PI

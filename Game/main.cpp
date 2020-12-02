@@ -2,7 +2,7 @@
 
 #include <cstdlib>
 #include "stdio.h"
-#include "..\..\header\Game.h"
+#include "..\header\Game.h"
 #include <algorithm>
 
 
