@@ -5,6 +5,10 @@
 #include "player.h"
 #include "Shader.h"
 
+#include "Weapon.h"
+#include "Background.h"
+
+
 class Game
 {
 public:
@@ -27,18 +31,31 @@ public:
 	void setPosition(glm::vec3 v3Pos);
 	void init(GLFWwindow* window, glm::vec2& v2Resolution);
 
+	glm::mat4 m_m4View;
+	
+
+private:
+	GLFWwindow* m_pWindow;
+
 	ShaderTech* m_pShader;
 	Player* m_pPlayer;
 
-	glm::mat4 m_m4View;
-	GLFWwindow* m_pWindow;
-
-private:
+	std::vector<Weapon> v_vWeapon;
 
 	double m_dMouseX, m_dMouseY;
 	int m_iWindowWidth, m_iWindowHeight;
 
 	GLuint m_uiTexture;
+	GLuint m_uiTexGunBullet;
+	GLuint m_uiTexBackground;
+	GLuint texPostac, texPostacShoot;
+
+	Draw* pDrawGunBullet;
+	Background* pBackground;
+
+
+	bool m_bShootReady;
+
 };//Box
 
 #endif

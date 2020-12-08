@@ -33,6 +33,15 @@
     <ClCompile Include="source\Tech.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Background.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Draw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Weapon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header\helper.h">
@@ -48,6 +57,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="header\Tech.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="header\Background.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="header\Draw.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="header\Weapon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -21,11 +21,20 @@ public:
 	GLuint getTexture();
 	glm::mat4 getWorld();
 	glm::vec3 getPosition();
+	glm::vec2 getDirection() const;
+
 
 	void setRotate(float fAngle);
 
 	void setAction(ACTION action, float fTime);
 	void setDirection(glm::vec2 v2MousePos);
+
+
+	void updateShoot();
+	void updateTimeShoot(float fTime);
+	bool shotReady();
+
+	float getAngle() const;
 
 private:
 	struct Vertex
@@ -61,6 +70,14 @@ private:
 	int m_iKierunekRot;
 
 	GLuint m_uiTextureID;
+	GLuint m_uiTextureShootID;
+
+
+	glm::vec2 mag;
+
+	float m_fTimeToShoot;
+	bool readyShoot;
+
 };//player
 
 #endif

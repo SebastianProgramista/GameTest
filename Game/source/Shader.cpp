@@ -36,18 +36,20 @@ bool ShaderTech::Init()
 	return true;
 }
 
-//------------------------------------------------
-// SetTextureUnit
-//------------------------------------------------
+//-----------------------------------------------
+// Name:
+// Desc:
+//
 void ShaderTech::SetTextureUnit(unsigned int uiTextureUnit)
 {
 	glActiveTexture(GL_TEXTURE0+uiTextureUnit);
     glUniform1i(m_samplerLocation, uiTextureUnit);
 }
 
-//------------------------------------------------
-// SetTextureUnit
-//------------------------------------------------
+//-----------------------------------------------
+// Name:
+// Desc:
+//
 void ShaderTech::set(glm::mat4 &m4World)
 {
 	glUniformMatrix4fv(m_WVPLocation, 1, GL_FALSE, glm::value_ptr(m4World));    

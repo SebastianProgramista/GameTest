@@ -9,7 +9,10 @@
 int windowWidth = 1280;
 int windowHeight = 720;
 
-
+//-----------------------------------------------
+// Name:
+// Desc:
+//
 void initOpenGL()
 {
 	glShadeModel(GL_SMOOTH);
@@ -24,45 +27,31 @@ void initOpenGL()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-
+//-----------------------------------------------
+// Name:
+// Desc:
+//
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GLFW_TRUE);
 }
 
-
+//-----------------------------------------------
+// Name:
+// Desc:
+//
 int main()
 {
 
-	// GLFWvidmode dtmode, modes[ MAX_NUM_MODES ];
-	 //int     modecount , i;
-
-	 // Initialize GLFW
 	if (!glfwInit())
 	{
 		exit(EXIT_FAILURE);
 	}
-	//GLFWmonitor* pMonitor;
-	// Show desktop video mode
-	//glfwGetVideoModes( &dtmode );
-	//printf( "Desktop mode: %d x %d x %d\n\n",
-	//        dtmode.Width, dtmode.Height, dtmode.RedBits +
-	//        dtmode.GreenBits + dtmode.BlueBits );
-
-	// List available video modes
-	//modecount = glfwGetVideoModes( modes, MAX_NUM_MODES );
-	//printf( "Available modes:\n" );
-	//for( i = 0; i < modecount; i ++ )
-   // {
-	//        printf( "%3d: %d x %d x %d\n", i,
-	//                modes[i].Width, modes[i].Height, modes[i].RedBits +
-	//                modes[i].GreenBits + modes[i].BlueBits );
-	//}
 
 	GLFWwindow* window;
 
-	window = glfwCreateWindow(windowWidth, windowHeight, "My Title", NULL, NULL);
+	window = glfwCreateWindow(windowWidth, windowHeight, "Top 2D Game", NULL, NULL);
 
 
 	if (!window)
@@ -77,9 +66,6 @@ int main()
 	glfwMakeContextCurrent(window);
 
 
-	//printf("OpenGL Context: %d.%d\n", glfwGetWindowParam(GLFW_OPENGL_VERSION_MAJOR), glfwGetWindowParam(GLFW_OPENGL_VERSION_MINOR));
-
-
 	if (glewInit() != GLEW_OK)
 	{
 		return false;
@@ -89,11 +75,6 @@ int main()
 	{
 		printf("all ok \n\n");
 	}
-
-	// glfwOpenWindowHint(GLFW_WINDOW_NO_RESIZE, GL_TRUE);
-	// glfwOpenWindowHint(GLFW_OPENGL_VERSION_MAJOR, 3);
-	// glfwOpenWindowHint(GLFW_OPENGL_VERSION_MINOR, 3);
-	// glfwOpenWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -131,7 +112,6 @@ int main()
 
 		glfwPollEvents();
 
-		//running =  !glfwGetKey( GLFW_KEY_ESC ) && glfwGetWindowParam(GLFW_OPENED);
 		running = !glfwGetKey(window, GLFW_KEY_ESCAPE) && !glfwWindowShouldClose(window);
 	}
 

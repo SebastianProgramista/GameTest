@@ -1,8 +1,9 @@
 #include "player.h"
 
-//------------------------------------------------
-// constructor
-//------------------------------------------------
+//-----------------------------------------------
+// Name:
+// Desc:
+//
 Player::Player()
 {
 	VBO            = 0;
@@ -10,11 +11,15 @@ Player::Player()
 	VAO            = 0;
 	m_fAngle       = 0.0f;
 	m_iKierunekRot = 0;
+
+
+	m_fTimeToShoot = 0.2f;
 }
 
-//------------------------------------------------
-// destructor
-//------------------------------------------------
+//-----------------------------------------------
+// Name:
+// Desc:
+//
 Player::~Player()
 {
 	glDeleteBuffers(1, &VBO);
@@ -22,9 +27,10 @@ Player::~Player()
 	glDeleteBuffers(1, &VAO);
 }
 
-//------------------------------------------------
-// Init
-//------------------------------------------------
+//-----------------------------------------------
+// Name:
+// Desc:
+//
 void Player::init(glm::vec3 v3Pos, glm::vec3 v3Rozm,glm::vec4 v4Textura, int iKierunek)
 {
 	glGenVertexArrays(1, &VAO); 
@@ -47,25 +53,28 @@ void Player::init(glm::vec3 v3Pos, glm::vec3 v3Rozm,glm::vec4 v4Textura, int iKi
 	m_m4World = glm::scale(m_m4World, m_v3Scale);
 }
 
-//------------------------------------------------
-// Set texture
-//------------------------------------------------
+//-----------------------------------------------
+// Name:
+// Desc:
+//
 void Player::setTexture(GLuint uiTex)
 {
 	m_uiTextureID = uiTex;	
 }
 
-//------------------------------------------------
-// Get texture id
-//------------------------------------------------
+//-----------------------------------------------
+// Name:
+// Desc:
+//
 GLuint Player::getTexture()
 {
 	return m_uiTextureID;
 }
 
-//------------------------------------------------
-// Get texture id
-//------------------------------------------------
+//-----------------------------------------------
+// Name:
+// Desc:
+//
 void Player::setAction(ACTION action, float fTime)
 {
 	switch(action)
@@ -89,8 +98,49 @@ void Player::setAction(ACTION action, float fTime)
 }
 
 //------------------------------------------------
-// Get texture id
+// updateTimeShoot
 //------------------------------------------------
+void Player::updateTimeShoot(float fTime)
+{
+	if (m_fTimeToShoot > 0.0)
+	{
+		m_fTimeToShoot -= fTime;
+	}
+	else
+	{
+		readyShoot = true;
+		m_fTimeToShoot = 0.0f;
+	}
+}
+
+//------------------------------------------------
+// updateShoot
+//------------------------------------------------
+void Player::updateShoot()
+{
+		m_fTimeToShoot = 0.2;
+}
+
+//------------------------------------------------
+// shotReady
+//------------------------------------------------
+bool Player::shotReady()
+{
+	if (readyShoot)
+	{
+		readyShoot = false;
+		m_fTimeToShoot = 0.2f;
+		return true;
+	}
+
+	return false;
+}
+
+
+//-----------------------------------------------
+// Name:
+// Desc:
+//
 void Player::setDirection(glm::vec2 v2MousePos)
 {
 	glm::vec2 player;
@@ -98,8 +148,8 @@ void Player::setDirection(glm::vec2 v2MousePos)
 	player.x = m_v3Translate.x;
 	player.y = m_v3Translate.y;
 
-	glm::vec2 mag = v2MousePos - player;
-	          mag = glm::normalize(mag);
+	mag = v2MousePos - player;
+	mag = glm::normalize(mag);
 
 	float angle = (float)glm::atan2(mag.x, mag.y);
 	
@@ -111,22 +161,21 @@ void Player::setDirection(glm::vec2 v2MousePos)
 }
 
 //------------------------------------------------
-// Create vertex buffer
+// getDirection
 //------------------------------------------------
+glm::vec2 Player::getDirection() const
+{
+	return mag;
+}
+
+//-----------------------------------------------
+// Name:
+// Desc:
+//
 void Player::CreateVertexBuffer(glm::vec3 &rozm, glm::vec4 &tex)
 {
 	Vertex Vertices[4] = {
 		
-		//offset tex.x = pozycja x
-		// tex.y = pozycjax uwzglêdniajaca szerokoœæ
-		// tex.z = pozycja y
-		// tex.w pozycja y uwzglêdniajaca wysokoœæ
-
-		/*
-			texX texW  --------  texY texW
-					   |	  |
-			texX texZ  --------  texY texZ	
-		*/
 		Vertex(glm::vec3( -rozm.x,  -rozm.y, rozm.z), glm::vec2(tex.x,tex.w)),
 		Vertex(glm::vec3(  rozm.x,  -rozm.y, rozm.z), glm::vec2(tex.y,tex.w)),
 	    Vertex(glm::vec3(  rozm.x,   rozm.y, rozm.z), glm::vec2(tex.y,tex.z)),
@@ -149,9 +198,10 @@ void Player::CreateVertexBuffer(glm::vec3 &rozm, glm::vec4 &tex)
 
 }//crete vertex buffer
 
-//------------------------------------------------
-// Create vertex buffer
-//------------------------------------------------
+//-----------------------------------------------
+// Name:
+// Desc:
+//
 void Player::CreateIndexBuffer()
 {
 	unsigned int Indices[] = 
@@ -166,27 +216,24 @@ void Player::CreateIndexBuffer()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
 }
 
-//------------------------------------------------
-// Render
-//------------------------------------------------
+//-----------------------------------------------
+// Name:
+// Desc:
+//
 void Player::render()
 {
 	glBindTexture(GL_TEXTURE_2D, m_uiTextureID);
-
-	glEnable(GL_BLEND);
 	
 	glBindVertexArray(VAO);
 
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	
 	glBindVertexArray(0);
-
-	glDisable(GL_BLEND);
-
 }
-//------------------------------------------------
-// Update
-//------------------------------------------------
+//-----------------------------------------------
+// Name:
+// Desc:
+//
 void Player::update()
 {
 	   	m_m4World = glm::mat4(1.0);
@@ -196,41 +243,47 @@ void Player::update()
 		m_m4World = glm::scale(m_m4World,m_v3Scale);
 }
 
-//------------------------------------------------
-// setPosition
-//------------------------------------------------
+//-----------------------------------------------
+// Name:
+// Desc:
+//
 void Player::setPosition(glm::vec3 v3Pos)
 {
 	m_v3Translate = v3Pos;
 }
 
-//------------------------------------------------
-// setPosition
-//------------------------------------------------
+//-----------------------------------------------
+// Name:
+// Desc:
+//
 void Player::setRotate(float fAngle)
 {
 	m_fAngle = fAngle;
 }
 
-//------------------------------------------------
-// getPosition
-//------------------------------------------------
+
+//------------------------------------------
+//
+//------------------------------------------
+float Player::getAngle() const
+{
+	return m_fAngle;
+}
+
+//-----------------------------------------------
+// Name:
+// Desc:
+//
 glm::vec3 Player::getPosition()
 {
 	glm::vec3 position = glm::vec3(1.0);
 	position = glm::vec3(m_m4World[3].x, m_m4World[3].y, m_m4World[3].z);
 	return position;
 }
-//------------------------------------------------
-// getAABB
-//------------------------------------------------
-/*glm::vec3 Hud::getAABB()
-{
-	return BoundingBox;
-}*/
-//------------------------------------------------
-// getWorld
-//------------------------------------------------
+//-----------------------------------------------
+// Name:
+// Desc:
+//
 glm::mat4 Player::getWorld()
 {
   return m_m4World;

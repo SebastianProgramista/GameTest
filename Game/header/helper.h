@@ -58,6 +58,13 @@ using namespace std;
 #define INVALID_MATERIAL 0xFFFFFFFF
 #define INVALID_OGL_VALUE 0xFFFFFFFF
 
+template <class item>
+void DeleteFromVector(vector<item>& vec, int index)
+{
+	vec[index] = vec[vec.size() - 1];
+	vec.pop_back();
+}
+
 enum ACTION
 {
 	ACTION_LEFT = 0,
