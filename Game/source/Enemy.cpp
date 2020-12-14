@@ -8,13 +8,14 @@
 // http://www.sworek.acsoftware.pl   
 //
 //+++++++++++++++++++++++++++++++++++++++++++++++
-#include "Weapon.h"
+
+#include "Enemy.h"
 
 //-----------------------------------------------
 // Name:
 // Desc:
 //
-Weapon::Weapon()
+Enemy::Enemy()
 {
 	m_pDraw = NULL;
 
@@ -26,19 +27,19 @@ Weapon::Weapon()
 
 	m_uiTextureID = 0;
 
-	m_fAngle = 0.0f;
-	m_fLife = 10.0f;
-	m_fSpeed = 50.0f;
-	m_fPower = 1.0f;
+	m_fAngle = 0;
 
-	m_bDead = false;
+	m_v2Direction = glm::vec2(0.0, 0.0);
+
+	m_fSpeed = 1.0f;
+
 }
 
 //-----------------------------------------------
 // Name:
 // Desc:
 //
-Weapon::~Weapon()
+Enemy::~Enemy()
 {
 
 }
@@ -47,12 +48,10 @@ Weapon::~Weapon()
 // Name:
 // Desc:
 //
-void Weapon::init(glm::vec3 v3Pos, GLuint uiTextureID, Draw *pDraw)
+void Enemy::init(glm::vec3 v3Pos, GLuint uiTextureID, Draw* pDraw)
 {
-	m_pDraw = pDraw;
-
 	m_uiTextureID = uiTextureID;
-
+	m_pDraw = pDraw;
 	m_v3Translate = v3Pos;
 }
 
@@ -60,7 +59,7 @@ void Weapon::init(glm::vec3 v3Pos, GLuint uiTextureID, Draw *pDraw)
 // Name:
 // Desc:
 //
-void Weapon::updateMatrix()
+void Enemy::updateMatrix()
 {
 	m_m4World = glm::mat4(1.0);
 
@@ -69,31 +68,11 @@ void Weapon::updateMatrix()
 	m_m4World = glm::scale(m_m4World, m_v3Scale);
 }
 
-
 //-----------------------------------------------
 // Name:
 // Desc:
 //
-void Weapon::update(float fTime)
-{
-	m_fLife -= fTime;
-	if (m_fLife <= 0.0)
-	{
-		m_fLife = 0.0;
-		m_bDead = true;
-	}
-
-	glm::vec2 newPos = m_v2Direction * m_fSpeed * fTime;
-	m_v3Translate += glm::vec3(newPos.x, newPos.y, 0.0);
-
-	updateMatrix();
-}
-
-//-----------------------------------------------
-// Name:
-// Desc:
-//
-void Weapon::setPosition(glm::vec3 v3Pos)
+void Enemy::setPosition(glm::vec3 v3Pos)
 {
 	m_v3Translate = v3Pos;
 }
@@ -102,24 +81,7 @@ void Weapon::setPosition(glm::vec3 v3Pos)
 // Name:
 // Desc:
 //
-void Weapon::setRotate(float fAngle)
-{
-	m_fAngle = fAngle;
-}
-
-//------------------------------------------
-// setDirection
-//------------------------------------------
-void Weapon::setDirection(glm::vec2 v2Direction)
-{
-	m_v2Direction = v2Direction;
-}
-
-//-----------------------------------------------
-// Name:
-// Desc:
-//
-void Weapon::setTexture(GLuint uiTex)
+void Enemy::setTexture(GLuint uiTex)
 {
 	m_uiTextureID = uiTex;
 }
@@ -128,7 +90,16 @@ void Weapon::setTexture(GLuint uiTex)
 // Name:
 // Desc:
 //
-GLuint Weapon::getTexture()
+void Enemy::setRotate(float fAngle)
+{
+	m_fAngle = fAngle;
+}
+
+//-----------------------------------------------
+// Name:
+// Desc:
+//
+GLuint Enemy::getTexture()
 {
 	return m_uiTextureID;
 }
@@ -137,16 +108,15 @@ GLuint Weapon::getTexture()
 // Name:
 // Desc:
 //
-glm::mat4 Weapon::getWorld()
+glm::mat4 Enemy::getWorld()
 {
 	return m_m4World;
 }
-
 //-----------------------------------------------
 // Name:
 // Desc:
 //
-glm::vec3 Weapon::getPosition()
+glm::vec3 Enemy::getPosition()
 {
 	return m_v3Translate;
 }
@@ -155,7 +125,7 @@ glm::vec3 Weapon::getPosition()
 // Name:
 // Desc:
 //
-Draw* Weapon::getDraw() const
+Draw* Enemy::getDraw() const
 {
 	return m_pDraw;
 }
@@ -164,48 +134,59 @@ Draw* Weapon::getDraw() const
 // Name:
 // Desc:
 //
-void Weapon::setDead(bool bDead)
+void Enemy::update(float fTime)
 {
-	m_bDead = bDead;
+	glm::vec2 newPos = m_v2Direction * m_fSpeed * fTime;
+
+	glm::vec2 mPosEnemy = glm::vec2(m_v3Translate.x, m_v3Translate.y);
+	if (Distance(m_v2PlayerPosition, mPosEnemy) > 48.0f)
+	{
+		m_v3Translate += glm::vec3(newPos.x, newPos.y, 0.0);
+	}
+
+	updateMatrix();
+}
+//-----------------------------------------------
+// Name:
+// Desc:
+//
+void Enemy::updateDirection(glm::vec2 v2PlayerPos)
+{
+	glm::vec2 player;
+
+	player.x = m_v3Translate.x;
+	player.y = m_v3Translate.y;
+
+	m_v2PlayerPosition = v2PlayerPos;
+
+	glm::vec2 mag = v2PlayerPos - player;
+	mag = glm::normalize(mag);
+
+	m_v2Direction = mag;
+
+	float angle = (float)glm::atan2(mag.x, mag.y);
+
+	if (_isnan(angle)) return;
+
+	angle = glm::degrees(angle);
+
+	setRotate(-angle);
 }
 
 //-----------------------------------------------
 // Name:
 // Desc:
 //
-bool Weapon::getIsDead() const
+Zombie::Zombie()
 {
-	return m_bDead;
+	m_fSpeed = 45.0f;
 }
 
 //-----------------------------------------------
 // Name:
 // Desc:
 //
-float Weapon::getPower() const
-{
-	return m_fPower;
-}
-
-
-//-----------------------------------------------
-// Name:
-// Desc:
-//
-Gun::Gun()
-{
-	m_fLife = 5.0f;
-
-	m_fSpeed = 200.0f;
-
-	m_fPower = 2.0f;
-}
-
-//-----------------------------------------------
-// Name:
-// Desc:
-//
-Gun::~Gun()
+Zombie::~Zombie()
 {
 
 }

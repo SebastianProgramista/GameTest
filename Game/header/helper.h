@@ -1,3 +1,13 @@
+//+++++++++++++++++++++++++++++++++++++++++++++++
+// Projekt : Gra 2D
+// Tech    : 
+//           OpenGL 3.3/ GLSL 330, 
+//           Glew 1.6, 
+//           GLFW 3 
+//           GLM 0.9.1.1
+// http://www.sworek.acsoftware.pl   
+//
+//+++++++++++++++++++++++++++++++++++++++++++++++
 #ifndef HELPER_H
 #define HELPER_H
 
@@ -23,7 +33,7 @@ using namespace std;
 #include <..\extended\GLFW3.3.2\glfw3.h>
 #include <..\extended\glew-1.6.0\include\GL/wglew.h>
 
-
+#pragma warning(push, 0)
 #include <..\extended\glm-0.9.1.1\glm\glm.hpp>
 
 
@@ -35,7 +45,7 @@ using namespace std;
 #include <..\extended\glm-0.9.1.1\glm\gtx/transform.hpp>
 
 #include <..\extended\SOIL\SOIL.h>
-
+#pragma warning(pop)
 
 #ifndef PI
 #define PI 3.14159265358979323
@@ -58,6 +68,32 @@ using namespace std;
 #define INVALID_MATERIAL 0xFFFFFFFF
 #define INVALID_OGL_VALUE 0xFFFFFFFF
 
+
+
+#ifndef SAFE_DELETE
+#define SAFE_DELETE(p) {if(p){ delete (p);  (p)=NULL; } }
+#endif
+
+template <class item>
+float Distance(item& vPoint1, item& vPoint2)
+{
+	double distance = sqrt((vPoint2.x - vPoint1.x) * (vPoint2.x - vPoint1.x) +
+		(vPoint2.y - vPoint1.y) * (vPoint2.y - vPoint1.y));
+	return (float)distance;
+}
+
+
+template <class item>
+bool Collide(item& b1, item& b2, item& pos1, item& pos2)
+{
+	if (pos1.x + b1.x > pos2.x - b2.x &&
+		pos1.x - b1.x < pos2.x + b2.x &&
+		pos1.y + b1.y > pos2.y - b2.y &&
+		pos1.y - b1.y < pos2.y + b2.y)
+		return true;
+	return false;
+}
+
 template <class item>
 void DeleteFromVector(vector<item>& vec, int index)
 {
@@ -65,12 +101,12 @@ void DeleteFromVector(vector<item>& vec, int index)
 	vec.pop_back();
 }
 
-enum ACTION
+enum class ACTION : int
 {
-	ACTION_LEFT = 0,
-	ACTION_RIGHT,
-	ACTION_UP,
-	ACTION_DOWN
+	GRACZ_LEFT = 0,
+	GRACZ_RIGHT = 1,
+	GRACZ_UP = 2,
+	GRACZ_DOWN = 3
 };
 
 #endif

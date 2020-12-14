@@ -1,4 +1,13 @@
-
+//+++++++++++++++++++++++++++++++++++++++++++++++
+// Projekt : Gra 2D
+// Tech    : 
+//           OpenGL 3.3/ GLSL 330, 
+//           Glew 1.6, 
+//           GLFW 3 
+//           GLM 0.9.1.1
+// http://www.sworek.acsoftware.pl   
+//
+//+++++++++++++++++++++++++++++++++++++++++++++++
 #include "Tech.h"
 
 static const char* pVSName = "VS";

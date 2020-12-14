@@ -9,47 +9,34 @@
 //
 //+++++++++++++++++++++++++++++++++++++++++++++++
 
-#ifndef PLAYER_H
-#define PLAYER_H
+#ifndef ENEMY_H
+#define ENEMY_H
 
 #include "helper.h"
 #include "Draw.h"
 
-class Player
+class Enemy
 {
-
 public:
-	Player();
-	virtual ~Player();
-	
-	void update();
+	Enemy();
+	virtual ~Enemy();
+	void init(glm::vec3 v3Pos, GLuint uiTextureID, Draw* pDraw);
+	void update(float fTime);
+	void updateMatrix();
 	void setPosition(glm::vec3 v3Pos);
-	void init(glm::vec3 v3pos, GLuint uiTextureID, Draw* pDraw);
-	
 	void setTexture(GLuint uiTex);
-	GLuint getTexture();
+	void setRotate(float fAngle);
 
+	GLuint getTexture();
 
 	glm::mat4 getWorld();
 	glm::vec3 getPosition();
 
 	Draw* getDraw() const;
+	Draw* m_pDraw;
 
-	void setAction(ACTION action, float fTime);
+	void updateDirection(glm::vec2 v2PlayerPos);
 
-	void setDirection(glm::vec2 v2MousePos);
-	void setRotate(float fAngle);
-
-	void updateTimeShoot(float fTime);
-
-	bool shotReady();
-
-	glm::vec2 getDirection() const;
-
-	float getAngle() const;
-
-
-private:
 	glm::mat4 m_m4World;
 
 	glm::vec3 m_v3Translate;
@@ -60,16 +47,19 @@ private:
 
 	float m_fAngle;
 
-	Draw* m_pDraw;
+
+	glm::vec2 m_v2Direction;
+	float m_fSpeed;
+
+	glm::vec2 m_v2PlayerPosition;
+};//enemy
 
 
-	float m_fPlayerSpeed;
-
-	glm::vec2 m_v2Magnitude;
-
-	float m_fTimeToShoot;
-	bool readyShoot;
-
-};//player
+class Zombie : public Enemy
+{
+public:
+	Zombie();
+	~Zombie();
+};//zombie
 
 #endif

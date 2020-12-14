@@ -1,8 +1,18 @@
+//+++++++++++++++++++++++++++++++++++++++++++++++
+// Projekt : Gra 2D
+// Tech    : 
+//           OpenGL 3.3/ GLSL 330, 
+//           Glew 1.6, 
+//           GLFW 3 
+//           GLM 0.9.1.1
+// http://www.sworek.acsoftware.pl   
+//
+//+++++++++++++++++++++++++++++++++++++++++++++++
 #define MAX_NUM_MODES 400
 
 #include <cstdlib>
 #include "stdio.h"
-#include "..\header\Game.h"
+#include "Game.h"
 #include <algorithm>
 
 
@@ -83,12 +93,20 @@ int main()
 
 	glfwSetKeyCallback(window, key_callback);
 
-	//OpenGL init
 	initOpenGL();
 
 	glfwSwapInterval(1);
 
-	Game* pGame = new Game();
+	Game* pGame = NULL;
+	pGame = new Game();
+
+
+	if (!pGame)
+	{
+		glfwTerminate();
+		return 0;
+	}
+	
 	pGame->init(window, glm::vec2(windowWidth, windowHeight));
 
 	bool running = true;
